@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>家計簿一覧</title>
+</head>
+<body>
+  <h1>家計簿</h1>
+  <table id="kakeibo" border="1"></table>
+
+  <script>
+    fetch("https://script.google.com/macros/s/AKfycbzKzPARk_6bUCL_I0frvMKEpL5DMjOKZBSVByLAPouFLZ2fd2FBfpq6GLT8_nH8D2kQlA/exec")
+      .then(res => res.json())
+      .then(data => {
+        const table = document.getElementById("kakeibo");
+
+        // ヘッダー
+        const headers = Object.keys(data[0]);
+        const headerRow = table.insertRow();
+        headers.forEach(key => {
+          const cell = headerRow.insertCell();
+          cell.textContent = key;
+        });
+
+        // データ行
+        data.forEach(row => {
+          const tr = table.insertRow();
+          headers.forEach(key => {
+            const cell = tr.insertCell();
+            cell.textContent = row[key];
+          });
+        });
+      });
+  </script>
+</body>
+</html>
